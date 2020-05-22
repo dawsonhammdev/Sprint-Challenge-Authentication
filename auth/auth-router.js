@@ -6,15 +6,7 @@ const bcrypt = require('bcryptjs')
 const users = require('./authModel')
 const jwt = require('jsonwebtoken')
 
-function generateToken(user) {
-  const payload = {
-      username: user.username
-  }
-  const options = {
-      expiresIn: '1d'
-  }
-  return jwt.sign(payload, process.env.JWT_SECRET || 'duh', options)
-}
+
 
 
 router.post('/register', (req, res) => {
@@ -53,5 +45,15 @@ router.post('/login', (req, res) => {
             })
     }
 });
+
+function generateToken(user) {
+    const payload = {
+        username: user.username
+    }
+    const options = {
+        expiresIn: '1d'
+    }
+    return jwt.sign(payload, process.env.JWT_SECRET || 'duh', options)
+  }
 
 module.exports = router;

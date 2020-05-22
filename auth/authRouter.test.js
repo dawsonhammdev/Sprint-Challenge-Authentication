@@ -45,12 +45,11 @@ test("POST /api/auth/register to be successful", async () => {
       .post("/api/auth/login")
       .send({ username: "devin", password: "hotsauce" });
     const res = await request(server)
-        .set("authorization", login.body.token)
         .get("/api/jokes")
-      
-    //   console.log(login.body.token)
-    // expect(res.body).toHaveLength(20);
-    expect(res.status).toBe(200);
+        .set("authorization", login.body.token)
+        //   console.log(login.body.token)
+        // expect(res.body).toHaveLength(20);
+        expect(res.status).toBe(200);
     
   });
 

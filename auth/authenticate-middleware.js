@@ -8,26 +8,26 @@ const users = require('./authModel')
 const jwt = require('jsonwebtoken')
 const jokes = require('../jokes/jokes-router')
 
-router.get('/api/jokes', validateToken, (req,res) => {
-  console.log(req.username)
-  users.find()
-      .then(user => {
-          const filtered = user.filter(item => {
-              return item === req.username
+// router.get('/api/jokes', validateToken, (req,res) => {
+//   console.log(req.username)
+//   users.find()
+//       .then(user => {
+//           const filtered = user.filter(item => {
+//               return item === req.username
           
-          })
-          const users = filtered.map(res => {
-              return { id: res.id, username: res.username}
-          })
-          res.status(200).json(users)
-      })
-      .catch(err => {
-          console.log(err)
-          res.status(500).json({message: "failed to find users"})
-      })
-})
+//           })
+//           const users = filtered.map(res => {
+//               return { id: res.id, username: res.username}
+//           })
+//           res.status(200).json(users)
+//       })
+//       .catch(err => {
+//           console.log(err)
+//           res.status(500).json({message: "failed to find users"})
+//       })
+// })
 
-function validateToken(req,res,next) {
+module.exports = function validateToken(req,res,next) {
   const token = req.headers.authorization
   if(token) {
       jwt.verify(token, process.env.JWT_SECRET || 'duh', (err, decodedToken) => {
@@ -49,7 +49,8 @@ function validateToken(req,res,next) {
 //     res.status(401).json({ you: 'shall not pass!' });
 //   };
 
-module.exports = router
+// module.exports = router
+
 
 
 
