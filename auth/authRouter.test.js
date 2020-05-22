@@ -37,5 +37,22 @@ test("POST /api/auth/register to be successful", async () => {
     expect(res.body).toMatchObject({ username: "devin" });
   });
 
+  test("GET /api/jokes to get all jokes", async () => {
+    const register = await request(server)
+      .post("/api/auth/register")
+      .send({ username: "devin", password: "hotsauce" });
+    const login = await request(server)
+      .post("/api/auth/login")
+      .send({ username: "devin", password: "hotsauce" });
+    const res = await request(server)
+        .set("authorization", login.body.token)
+        .get("/api/jokes")
+      
+    //   console.log(login.body.token)
+    // expect(res.body).toHaveLength(20);
+    expect(res.status).toBe(200);
+    
+  });
+
 
 

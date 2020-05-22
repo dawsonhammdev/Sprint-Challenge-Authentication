@@ -8,7 +8,7 @@ const users = require('./authModel')
 const jwt = require('jsonwebtoken')
 const jokes = require('../jokes/jokes-router')
 
-router.get('/', validateToken, (req,res) => {
+router.get('/api/jokes', validateToken, (req,res) => {
   console.log(req.username)
   users.find()
       .then(user => {
@@ -35,7 +35,9 @@ function validateToken(req,res,next) {
               res.status(401).json({message: 'token not valid'})
           }else{
               req.username = decodedToken
+              
               next()
+              
           }
       })
   }else{
@@ -43,9 +45,11 @@ function validateToken(req,res,next) {
   } 
 }
 
+// module.exports = (req, res, next) => {
+//     res.status(401).json({ you: 'shall not pass!' });
+//   };
+
 module.exports = router
 
 
-// module.exports = (req, res, next) => {
-//   res.status(401).json({ you: 'shall not pass!' });
-// };
+
